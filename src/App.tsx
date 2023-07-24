@@ -1,9 +1,7 @@
-import React from "react";
 import Scoreboard from "./components/Scoreboard";
 import "./components/style.css";
-type Props = {};
 
-const App = (props: Props) => {
+const App = () => {
   return (
     <div className="app">
       <Scoreboard />
