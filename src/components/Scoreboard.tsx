@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 const Scoreboard: React.FC = () => {
   const initialTeamState = {
@@ -38,7 +38,7 @@ const Scoreboard: React.FC = () => {
     localStorage.setItem("updatesShown", "true");
   };
 
-  const handleGameClick = (team) => {
+  const handleGameClick = (team: any) => {
     if (team.name === "Team A") {
       if (teamA.game === 6) {
         setTeamA({ ...teamA, game: 0 });
@@ -56,7 +56,7 @@ const Scoreboard: React.FC = () => {
     }
   };
 
-  const incrementScore = (team) => {
+  const incrementScore = (team: any) => {
     if (team.score === 0) {
       team.score = 15;
     } else if (team.score === 15) {
@@ -82,7 +82,7 @@ const Scoreboard: React.FC = () => {
     updateTeam(team);
   };
 
-  const decrementScore = (team) => {
+  const decrementScore = (team: any) => {
     if (team.score === 0) {
       return; // No negative points
     } else if (team.score === 15) {
@@ -101,7 +101,7 @@ const Scoreboard: React.FC = () => {
     setTeamB({ ...initialTeamState, name: "Team B" });
   };
 
-  const updateTeam = (team) => {
+  const updateTeam = (team: any) => {
     if (team.name === "Team A") {
       setTeamA({ ...team });
     } else {
