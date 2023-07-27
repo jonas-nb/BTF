@@ -4,6 +4,12 @@ import "./style.css";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 const Scoreboard: React.FC = () => {
+  interface Team {
+    name: string;
+    score: number;
+    game: number;
+  }
+
   const initialTeamState = {
     name: "Team",
     score: 0,
@@ -42,14 +48,12 @@ const Scoreboard: React.FC = () => {
     if (team.name === "Team A") {
       if (teamA.game === 6) {
         setTeamA({ ...teamA, game: 0 });
-        setShowWinner(true);
       } else {
         setTeamA({ ...teamA, game: teamA.game + 1 });
       }
     } else {
       if (teamB.game === 6) {
         setTeamB({ ...teamB, game: 0 });
-        setShowWinner(true);
       } else {
         setTeamB({ ...teamB, game: teamB.game + 1 });
       }
@@ -101,7 +105,7 @@ const Scoreboard: React.FC = () => {
     setTeamB({ ...initialTeamState, name: "Team B" });
   };
 
-  const updateTeam = (team: any) => {
+  const updateTeam = (team: Team) => {
     if (team.name === "Team A") {
       setTeamA({ ...team });
     } else {
