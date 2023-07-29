@@ -10,13 +10,12 @@ const Scoreboard: React.FC = () => {
     game: number;
   }
 
+  //Objeto para inicializar os states
   const initialTeamState = {
     name: "Team",
     score: 0,
     game: 0,
   };
-
-  localStorage.clear();
 
   const [teamA, setTeamA] = useState({ ...initialTeamState, name: "Team A" });
   const [teamB, setTeamB] = useState({ ...initialTeamState, name: "Team B" });
@@ -24,27 +23,7 @@ const Scoreboard: React.FC = () => {
   const [alertWin, setAlertWin] = useState("");
   const toggle = () => setModal(!modal);
 
-  // Estado para controlar se a lista de atualizações deve ser mostrada
-  const [showUpdates, setShowUpdates] = useState(false);
-
-  // Efeito para verificar se a lista de atualizações deve ser mostrada
-  useEffect(() => {
-    // Verifica se a flag "updatesShown" está presente no localStorage
-    const updatesShown = localStorage.getItem("updatesShown");
-
-    // Se a flag não estiver presente, mostra as atualizações
-    if (!updatesShown) {
-      setShowUpdates(true);
-    }
-  }, []);
-
-  // Função para fechar o modal e definir a flag no localStorage para não mostrar novamente
-  const closeModal = () => {
-    setShowUpdates(false);
-    localStorage.setItem("updatesShown", "true");
-  };
-
-  const handleGameClick = (team: any) => {
+  const handleGameClick = (team: Team) => {
     if (team.name === "Team A") {
       if (teamA.game === 6) {
         setTeamA({ ...teamA, game: 0 });
@@ -60,7 +39,7 @@ const Scoreboard: React.FC = () => {
     }
   };
 
-  const incrementScore = (team: any) => {
+  const incrementScore = (team: Team) => {
     if (team.score === 0) {
       team.score = 15;
     } else if (team.score === 15) {
@@ -69,11 +48,13 @@ const Scoreboard: React.FC = () => {
       team.score = 40;
     } else if (team.score === 40) {
       // If a team reaches 40 points and wins the game
+      /* setTeamA({...teamA, score: 0 });
+      setTeamB({...teamB, score: 0 }); */
       if (team.game === 6) {
         // Game over, team won
         setModal(!modal);
         setAlertWin(`${team.name} Ganhou 🎉`);
-        console.log(`${team.name} won the game!`);
+
         // Reset the score for both teams
         setTeamA({ ...initialTeamState, name: "Team A" });
         setTeamB({ ...initialTeamState, name: "Team B" });
@@ -86,7 +67,7 @@ const Scoreboard: React.FC = () => {
     updateTeam(team);
   };
 
-  const decrementScore = (team: any) => {
+  const decrementScore = (team: Team) => {
     if (team.score === 0) {
       return; // No negative points
     } else if (team.score === 15) {
@@ -116,6 +97,7 @@ const Scoreboard: React.FC = () => {
   return (
     <div className="scoreboard">
       <div className="team-container w-full h-screen sm:flex-row  flex-col md:flex-col">
+        {/* section team A */}
         <div className="w-full h-full sm:h-screen  bg-black text-white flex flex-col items-center justify-around">
           <div className="team-name text-3xl sm:self-end md:self-center sm:pr-5 md:pr-0">
             {teamA.name}
@@ -143,6 +125,8 @@ const Scoreboard: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* section team B */}
         <div className="w-full h-full sm:h-screen  bg-green-400 text-black flex flex-col items-center justify-around">
           <div className="team-name sm:self-start md:self-center sm:pl-5 md:pl-0 text-3xl">
             {teamB.name}
@@ -170,6 +154,7 @@ const Scoreboard: React.FC = () => {
             </button>
           </div>
 
+          {/* modal que mostra quando o jogador ganhour */}
           <Modal isOpen={modal}>
             <ModalBody className="text-6xl text-center">{alertWin}</ModalBody>
             <ModalFooter>
@@ -178,22 +163,6 @@ const Scoreboard: React.FC = () => {
               </Button>
             </ModalFooter>
           </Modal>
-          {showUpdates && (
-            <Modal>
-              <ModalBody>
-                {/* Conteúdo das atualizações */}
-                <h2>Atualizações</h2>
-                <ul>
-                  <li>Foi feito a atualização na contagem de pontos</li>
-                  <li>
-                    Ao clicar no campo game adciona mais um caso necessário
-                  </li>
-                </ul>
-                <p>Create with 💚 by Jonas Batista</p>
-                <button onClick={closeModal}>Fechar</button>
-              </ModalBody>
-            </Modal>
-          )}
         </div>
       </div>
 
