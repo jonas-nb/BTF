@@ -54,8 +54,8 @@ const Scoreboard: React.FC = () => {
 
       if (team.game === 6) {
         // Game over, team won
-        setModal(!modal);
-        setAlertWin(`${team.name} Ganhou 🎉`);
+       // setModal(!modal);
+        //setAlertWin(`${team.name} Ganhou 🎉`);
 
         // Reset the score for both teams
         setTeamA({ ...initialTeamState, name: "Team A" });
