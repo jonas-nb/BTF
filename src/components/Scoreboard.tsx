@@ -22,7 +22,7 @@ const Scoreboard: React.FC = () => {
   const [teamB, setTeamB] = useState({ ...initialTeamState, name: "Team B" });
   const [modal, setModal] = useState(false);
 
-  // const toggle = () => setModal(!modal);
+  // const toggle = () => setModal(!modal); fazer o toogle
 
   const handleGameClick = (team: Team) => {
     if (team.name === "Team A") {
