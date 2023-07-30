@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
-import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import "./../styles/scoreboardStyled.css";
 
 const Scoreboard: React.FC = () => {
   interface Team {
@@ -21,7 +22,8 @@ const Scoreboard: React.FC = () => {
   const [teamB, setTeamB] = useState({ ...initialTeamState, name: "Team B" });
   const [modal, setModal] = useState(false);
   const [alertWin, setAlertWin] = useState("");
-  const toggle = () => setModal(!modal);
+
+  // const toggle = () => setModal(!modal);
 
   const handleGameClick = (team: Team) => {
     if (team.name === "Team A") {
@@ -48,8 +50,9 @@ const Scoreboard: React.FC = () => {
       team.score = 40;
     } else if (team.score === 40) {
       // If a team reaches 40 points and wins the game
-      /* setTeamA({...teamA, score: 0 });
-      setTeamB({...teamB, score: 0 }); */
+      setTeamA({ ...teamA, score: 0 });
+      setTeamB({ ...teamB, score: 0 });
+
       if (team.game === 6) {
         // Game over, team won
         setModal(!modal);
@@ -94,85 +97,112 @@ const Scoreboard: React.FC = () => {
     }
   };
 
+  const [isLandscape, setIsLandscape] = useState(
+    window.innerWidth > window.innerHeight
+  );
+
+  useEffect(() => {
+    const handleOrientationChange = () => {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleOrientationChange);
+
+    return () => {
+      window.removeEventListener("resize", handleOrientationChange);
+    };
+  }, []);
+
   return (
-    <div className="scoreboard">
-      <div className="team-container w-full h-screen sm:flex-row  flex-col md:flex-col">
-        {/* section team A */}
-        <div className="w-full h-full sm:h-screen  bg-black text-white flex flex-col items-center justify-around">
-          <div className="team-name text-3xl sm:self-end md:self-center sm:pr-5 md:pr-0">
-            {teamA.name}
-          </div>
-          <div className="team-score">{teamA.score}</div>
-          <div
-            className="team-game"
-            onClick={() => handleGameClick(teamA)}
-            style={{ cursor: "pointer" }}
-          >
-            game: {teamA.game}
-          </div>
-          <div className="btn-center">
-            <button
-              className="bg-white/10 text-3xl"
-              onClick={() => decrementScore(teamA)}
-            >
-              -1
-            </button>
-            <button
-              className="bg-white/10 text-3xl"
-              onClick={() => incrementScore(teamA)}
-            >
-              +1
-            </button>
-          </div>
-        </div>
+    <div>
+      <div>
+        {isLandscape ? (
+          // Conteúdo da página em modo paisagem
+          <div>
+            <div className="scoreboard bg-container">
+              <div className="flex">
+                {/* section team A */}
+                <div className="score-container">
+                  <div className="name bg-[#08b324]">{teamA.name}</div>
 
-        {/* section team B */}
-        <div className="w-full h-full sm:h-screen  bg-green-400 text-black flex flex-col items-center justify-around">
-          <div className="team-name sm:self-start md:self-center sm:pl-5 md:pl-0 text-3xl">
-            {teamB.name}
-          </div>
-          <div className="team-score">{teamB.score}</div>
-          <div
-            className="team-game"
-            onClick={() => handleGameClick(teamB)}
-            style={{ cursor: "pointer" }}
-          >
-            game: {teamB.game}
-          </div>
-          <div className="btn-center">
-            <button
-              className="bg-white/40 text-3xl"
-              onClick={() => decrementScore(teamB)}
-            >
-              -1
-            </button>
-            <button
-              className="bg-white/40 text-3xl"
-              onClick={() => incrementScore(teamB)}
-            >
-              +1
-            </button>
-          </div>
+                  {/* container dos pontos */}
+                  <div className="score-main ">
+                    <button
+                      className="p-2 w-14 h-12 bg-white/40 text-xl hover:border-none active:bg-[#1ef554] shadow-black shadow-sm"
+                      onClick={() => decrementScore(teamA)}
+                    >
+                      -
+                    </button>
+                    <div className="score">{teamA.score}</div>
+                    <button
+                      className="p-2 w-14 h-12 bg-white/40 text-xl hover:border-none active:bg-[#1ef554] shadow-black shadow-sm"
+                      onClick={() => incrementScore(teamA)}
+                    >
+                      +
+                    </button>
+                  </div>
 
-          {/* modal que mostra quando o jogador ganhour */}
-          <Modal isOpen={modal}>
-            <ModalBody className="text-6xl text-center">{alertWin}</ModalBody>
-            <ModalFooter>
-              <Button className="bg-black" onClick={toggle}>
-                Jogar novamente
-              </Button>
-            </ModalFooter>
-          </Modal>
-        </div>
-      </div>
+                  {/* controle do game */}
+                  <div className="uppercase text-[#000] text-xl">game</div>
+                  <div
+                    className="game"
+                    onClick={() => handleGameClick(teamA)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {teamA.game}
+                  </div>
+                </div>
+                {/* section team B */}
+                <div className="score-container">
+                  <div className="name bg-black text-[rgb(182,255,180)]">
+                    {teamB.name}
+                  </div>
 
-      <div className="fixed top-0 w-full flex justify-between">
-        <button
-          className="reset-button w-[8rem] bg-white/10"
-          onClick={resetPoints}
-        >
-          Resetar Pontuação
-        </button>
+                  {/* container dos pontos */}
+                  <div className="score-main">
+                    <button
+                      className="p-2 w-14 h-12 bg-white/40 text-xl hover:border-none active:bg-[#1ef554] shadow-black shadow-sm"
+                      onClick={() => decrementScore(teamB)}
+                    >
+                      -
+                    </button>
+                    <div className="score">{teamB.score}</div>
+                    <button
+                      className="p-2 w-14 h-12 bg-white/40 text-xl hover:border-none active:bg-[#1ef554] shadow-black shadow-sm"
+                      onClick={() => incrementScore(teamB)}
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* controle do game */}
+                  <div className="uppercase text-[#000] text-xl">game</div>
+                  <div
+                    className="game"
+                    onClick={() => handleGameClick(teamB)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {teamB.game}
+                  </div>
+                </div>
+              </div>
+
+              <div className="fixed top-0 w-full ">
+                <button
+                  className="reset-button w-[8rem] bg-white/10"
+                  onClick={resetPoints}
+                >
+                  Resetar Pontuação
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          // Mensagem para girar o dispositivo para o modo paisagem
+          <div>
+            <h1>Por favor, vire seu dispositivo para o modo paisagem.</h1>
+          </div>
+        )}
       </div>
     </div>
   );
