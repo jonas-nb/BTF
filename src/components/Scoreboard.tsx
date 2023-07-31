@@ -21,8 +21,10 @@ const Scoreboard: React.FC = () => {
 
   const [teamA, setTeamA] = useState({ ...initialTeamState, name: "Team A" });
   const [teamB, setTeamB] = useState({ ...initialTeamState, name: "Team B" });
+
   const [modal, setModal] = useState(false);
   const [alertWin, setAlertWin] = useState("");
+
 
   const toggle = () => setModal(!modal);
 
@@ -56,8 +58,8 @@ const Scoreboard: React.FC = () => {
 
       if (team.game === 6) {
         // Game over, team won
-        setModal(!modal);
-        setAlertWin(`${team.name} Ganhou 🎉`);
+       // setModal(!modal);
+        //setAlertWin(`${team.name} Ganhou 🎉`);
 
         // Reset the score for both teams
         setTeamA({ ...initialTeamState, name: "Team A" });
