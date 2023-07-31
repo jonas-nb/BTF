@@ -1,5 +1,5 @@
 import Scoreboard from "./components/Scoreboard";
-import "./components/style.css";
+import "./styles/global.css";
 
 const App = () => {
   return (
@@ -10,4 +10,3 @@ const App = () => {
 };
 
 export default App;
-

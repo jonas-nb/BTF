@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@700&display=swap");
+
+@media (orientation: landscape) {
+  .scoreboard__container {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .scoreboard__container .team-name {
+    height: 3rem;
+    width: 10rem;
+    padding: 1rem;
+    position: relative;
+    top: 10px;
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Oxygen", sans-serif;
+    font-size: 2rem;
+    color: #111b13;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .scoreborad__score {
+    padding: 0.25rem;
+    padding: 10px;
+    width: 18rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .scoreborad__score .score {
+    width: 6rem;
+    text-align: center;
+    font-size: 5rem;
+    color: #00110a;
+  }
+
+  .scoreboard__game {
+    width: 7rem;
+    height: 7rem;
+    background-color: #00000046;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-transform: uppercase;
+  }
+
+  .scoreboard__game .title {
+    background-color: #00110aa1;
+    width: 7rem;
+    text-align: center;
+    font-family: "Oxygen", sans-serif;
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-style: italic;
+    border-radius: 0.25rem;
+    padding: 5px;
+    margin-bottom: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .scoreboard__game .btn {
+    width: 4rem;
+    height: 3rem;
+    border-radius: 0.2rem;
+    background: #00ff95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Oxygen", sans-serif;
+    font-size: 2rem;
+    color: #001614;
+    font-style: italic;
+    box-shadow: #00271727 0px 3px;
+  }
+}
+
+@media (orientation: portrait) {
+  body {
+    background-color: lightgreen;
+  }
+}
+
+.bg-container {
+  background-color: #00e97b;
+  background-image: linear-gradient(160deg, #00e97b 0%, #00110a 100%);
+}

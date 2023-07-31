@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Modal, ModalHeader, Button } from "reactstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
-import "./../styles/scoreboardStyled.css";
+import "./../styles/global.css";
+import "./../styles/scoreboard.css";
 
 const Scoreboard: React.FC = () => {
   interface Team {
@@ -21,13 +22,15 @@ const Scoreboard: React.FC = () => {
   const [teamA, setTeamA] = useState({ ...initialTeamState, name: "Team A" });
   const [teamB, setTeamB] = useState({ ...initialTeamState, name: "Team B" });
   const [modal, setModal] = useState(false);
+  const [alertWin, setAlertWin] = useState("");
 
-  // const toggle = () => setModal(!modal); fazer o toogle
+  const toggle = () => setModal(!modal);
 
   const handleGameClick = (team: Team) => {
     if (team.name === "Team A") {
       if (teamA.game === 6) {
         setTeamA({ ...teamA, game: 0 });
+        é;
       } else {
         setTeamA({ ...teamA, game: teamA.game + 1 });
       }
@@ -121,11 +124,13 @@ const Scoreboard: React.FC = () => {
             <div className="scoreboard bg-container">
               <div className="flex">
                 {/* section team A */}
-                <div className="score-container">
-                  <div className="name bg-[#08b324]">{teamA.name}</div>
+                <div className="scoreboard__container border-r border-[#001a064d]">
+                  <div className="team-name bg-[#1df500] text-black">
+                    {teamA.name}
+                  </div>
 
                   {/* container dos pontos */}
-                  <div className="score-main ">
+                  <div className="scoreborad__score">
                     <button
                       className="p-2 w-14 h-12 bg-white/40 text-xl hover:border-none active:bg-[#1ef554] shadow-black shadow-sm"
                       onClick={() => decrementScore(teamA)}
@@ -142,23 +147,26 @@ const Scoreboard: React.FC = () => {
                   </div>
 
                   {/* controle do game */}
-                  <div className="uppercase text-[#000] text-xl">game</div>
-                  <div
-                    className="game"
-                    onClick={() => handleGameClick(teamA)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {teamA.game}
+                  <div className="scoreboard__game">
+                    <div className="title">game</div>
+                    <div
+                      className="btn"
+                      onClick={() => handleGameClick(teamA)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {teamA.game}
+                    </div>
                   </div>
                 </div>
+
                 {/* section team B */}
-                <div className="score-container">
-                  <div className="name bg-black text-[rgb(182,255,180)]">
+                <div className="scoreboard__container border-l border-[#001a064d]">
+                  <div className="team-name bg-black text-white">
                     {teamB.name}
                   </div>
 
                   {/* container dos pontos */}
-                  <div className="score-main">
+                  <div className="scoreborad__score ">
                     <button
                       className="p-2 w-14 h-12 bg-white/40 text-xl hover:border-none active:bg-[#1ef554] shadow-black shadow-sm"
                       onClick={() => decrementScore(teamB)}
@@ -175,24 +183,48 @@ const Scoreboard: React.FC = () => {
                   </div>
 
                   {/* controle do game */}
-                  <div className="uppercase text-[#000] text-xl">game</div>
-                  <div
-                    className="game"
-                    onClick={() => handleGameClick(teamB)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {teamB.game}
+                  <div className="scoreboard__game">
+                    <div className="title">game</div>
+                    <div
+                      className="btn"
+                      onClick={() => handleGameClick(teamB)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {teamB.game}
+                    </div>
                   </div>
+                </div>
+                {/* Teste modal */}
+                <div>
+                  <Modal className="bg" isOpen={modal} toggle={toggle}>
+                    <ModalHeader className="text-4xl m-auto" toggle={toggle}>
+                      {alertWin}
+                    </ModalHeader>
+                    <Button
+                      onClick={toggle}
+                      className="bg-black w-36 m-auto mb-5"
+                    >
+                      Jogar Novamente
+                    </Button>
+                  </Modal>
                 </div>
               </div>
 
-              <div className="fixed top-0 w-full ">
+              <div className="fixed bottom-0 left-0 w-[5rem] h-16">
                 <button
-                  className="reset-button w-[8rem] bg-white/10"
+                  className="rounded-none rounded-r-md flex items-center justify-center w-[5rem]  bg-white/30 hover:bg-green-500 hover:border-none"
                   onClick={resetPoints}
                 >
-                  Resetar Pontuação
+                  Resetar Pontos
                 </button>
+                <div className="fixed bottom-0 right-0 w-[5rem] h-16">
+                  <button
+                    className="rounded-none rounded-l-md flex items-center justify-center w-[5rem]  bg-white/30 hover:bg-green-500 hover:border-none"
+                    onClick={resetPoints}
+                  >
+                    Modo Jogo
+                  </button>
+                </div>
               </div>
             </div>
           </div>
