@@ -193,7 +193,7 @@ const Scoreboard: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                {/* Teste modal */}
+                {/* modal */}
                 <div>
                   <Modal className="bg" isOpen={modal} toggle={toggle}>
                     <ModalHeader className="text-4xl m-auto" toggle={toggle}>
