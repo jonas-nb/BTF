@@ -27,8 +27,11 @@
 <hr />
 <h2>Para contribuir</h2>
 <code>git clone https://github.com/jonas-nb/BTF</code>
+<br />
 <code>npm install</code>
+<br />
 <code>npm run dev</code>
+<br />
 <hr />
 <h2>Contato</h2>
 <h2>Jonas Batista</h2>
