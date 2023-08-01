@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Modal, ModalHeader, Button } from "reactstrap";
+import React, { useState, useContext } from "react";
+import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
+import { GoldPointContext } from "./ScoreboardContext";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../styles/global.css";
@@ -19,22 +20,26 @@ const Scoreboard: React.FC = () => {
     game: 0,
   };
 
+  const { setGoldPoint, goldPoint } = useContext(GoldPointContext);
   const [teamA, setTeamA] = useState({ ...initialTeamState, name: "Team A" });
   const [teamB, setTeamB] = useState({ ...initialTeamState, name: "Team B" });
   const [modal, setModal] = useState(false);
+  const [modalGameMode, setModalGameMode] = useState(false);
   const [alertWin, setAlertWin] = useState("");
 
   const toggle = () => setModal(!modal);
+  const toggleGameMode = () => setModalGameMode(!modalGameMode);
 
+  //controla os gamers do jogo
   const handleGameClick = (team: Team) => {
     if (team.name === "Team A") {
-      if (teamA.game === 6) {
+      if (teamA.game === goldPoint) {
         setTeamA({ ...teamA, game: 0 });
       } else {
         setTeamA({ ...teamA, game: teamA.game + 1 });
       }
     } else {
-      if (teamB.game === 6) {
+      if (teamB.game === goldPoint) {
         setTeamB({ ...teamB, game: 0 });
       } else {
         setTeamB({ ...teamB, game: teamB.game + 1 });
@@ -54,7 +59,7 @@ const Scoreboard: React.FC = () => {
       setTeamA({ ...teamA, score: 0 });
       setTeamB({ ...teamB, score: 0 });
 
-      if (team.game === 6) {
+      if (team.game === goldPoint) {
         // Game over, team won
         setModal(!modal);
         setAlertWin(`${team.name} Ganhou 🎉`);
@@ -97,7 +102,7 @@ const Scoreboard: React.FC = () => {
       setTeamB({ ...team });
     }
   };
-
+  console.log(goldPoint);
   return (
     <div>
       <div>
@@ -175,7 +180,7 @@ const Scoreboard: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {/* modal */}
+              {/* modal show win*/}
               <div>
                 <Modal className="bg" isOpen={modal} toggle={toggle}>
                   <ModalHeader className="text-4xl m-auto" toggle={toggle}>
@@ -191,6 +196,59 @@ const Scoreboard: React.FC = () => {
               </div>
             </div>
 
+            {/* modal toggle game mode */}
+            <Modal isOpen={modalGameMode} toggle={toggleGameMode}>
+              <ModalHeader className="m-auto text-4xl">
+                Escolha um modo de jogo
+              </ModalHeader>
+              <ModalBody>
+                <div className="m-auto flex flex-col items-center">
+                  <div className="flex flex-col items-center">
+                    <p>Modo rápido, ganha quem fizer 3 gamers primeiro</p>
+                    <button
+                      className="toggleGameModeBtn"
+                      onClick={() => {
+                        setGoldPoint(2);
+                        toggleGameMode();
+                      }}
+                    >
+                      Melhor de 3
+                    </button>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <p>São necessários 5 gamers para vitória</p>
+                    <button
+                      className="toggleGameModeBtn"
+                      onClick={() => {
+                        toggleGameMode();
+                        setGoldPoint(4);
+                      }}
+                    >
+                      Melhor de 5
+                    </button>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <p>Modo de jogo oficial sem tie break</p>
+                    <button
+                      className="toggleGameModeBtn"
+                      onClick={() => {
+                        setGoldPoint(6);
+                        toggleGameMode();
+                      }}
+                    >
+                      Melhor de 7
+                    </button>
+                  </div>
+                </div>
+              </ModalBody>
+              <Button
+                onClick={toggleGameMode}
+                className="bg-black w-36 m-auto mb-5"
+              >
+                Fechar
+              </Button>
+            </Modal>
+
             <div className="fixed bottom-0 left-0 w-[5rem] h-16">
               <button
                 className="rounded-none rounded-r-md flex items-center justify-center w-[5rem]  bg-white/30 hover:bg-green-500 hover:border-none"
@@ -201,7 +259,7 @@ const Scoreboard: React.FC = () => {
               <div className="fixed bottom-0 right-0 w-[5rem] h-16">
                 <button
                   className="rounded-none rounded-l-md flex items-center justify-center w-[5rem]  bg-white/30 hover:bg-green-500 hover:border-none"
-                  onClick={resetPoints}
+                  onClick={toggleGameMode}
                 >
                   Modo Jogo
                 </button>

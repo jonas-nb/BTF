@@ -1,10 +1,12 @@
 import Scoreboard from "./components/Scoreboard";
 import "./styles/global.css";
-
+import { GoldPointProvider } from "./components/ScoreboardContext";
 const App = () => {
   return (
     <div className="app">
-      <Scoreboard />
+      <GoldPointProvider>
+        <Scoreboard />
+      </GoldPointProvider>
     </div>
   );
 };
